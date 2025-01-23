@@ -1,0 +1,22 @@
+spring:
+  config:
+    name: ms-gf-checkout-service
+  kafka:
+    consumer:
+      bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      properties:
+        interceptor:
+          classes: com.greenfood.checkout_service.infrastructure.configuration.interceptor.KafkaConsumerInterceptor
+  data:
+    mongodb:
+        uri: ${MONGODB_URI:mongodb://localhost:27017/greenfood-checkout-service}
+server:
+  port: 8090
+
+kafka:
+  topic:
+    producer:
+      name: checkout-topic
+      group-id: checkout-group
