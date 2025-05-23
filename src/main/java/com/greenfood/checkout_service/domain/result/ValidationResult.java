@@ -38,15 +38,24 @@ public class ValidationResult extends Result {
     public static ValidationResult fail(Map<String, List<String>> validationErrors) {
         return new ValidationResult(validationErrors);
     }
-    
-    /**
+      /**
      * Adiciona um erro de validação para um campo específico.
      */
     public ValidationResult addError(String field, String errorMessage) {
+        // Primeiro atualizamos o estado da classe pai
+        super.success = false;
+        
+        // Garantimos que a lista de erros existe
         if (!validationErrors.containsKey(field)) {
             validationErrors.put(field, new ArrayList<>());
         }
+        
+        // Adicionamos o erro ao mapa de validação
         validationErrors.get(field).add(errorMessage);
+        
+        // Adicionamos o erro formatado à lista da classe pai
+        super.errors.add(field + ": " + errorMessage);
+        
         return this;
     }
     
