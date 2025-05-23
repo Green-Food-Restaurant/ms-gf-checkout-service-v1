@@ -12,8 +12,8 @@ import lombok.Getter;
  */
 @Getter
 public class Result {
-    private boolean success;
-    private List<String> errors;
+    protected boolean success;
+    protected List<String> errors;
     
     protected Result() {
         this.success = true;
