@@ -21,5 +21,5 @@ public class CheckoutEntity {
     private PaymentMethod paymentMethod;
     private PaymentStatus paymentStatus;
     private String paymentDate;
-    private String paymentAmount;
+    private Number paymentAmount;
 }

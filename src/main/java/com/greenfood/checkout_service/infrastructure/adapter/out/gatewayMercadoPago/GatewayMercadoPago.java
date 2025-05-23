@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 import com.greenfood.checkout_service.application.dtos.PaymentDto;
 import com.greenfood.checkout_service.application.dtos.ProductDto;
 import com.greenfood.checkout_service.application.port.out.GatewayMercadoPagoPortOut;
+import com.greenfood.checkout_service.domain.result.ResultT;
 import com.greenfood.checkout_service.infrastructure.adapter.in.controller.dto.ResponseCheckoutDto;
 import com.greenfood.checkout_service.infrastructure.adapter.out.gatewayMercadoPago.utils.GsonBuilderMPConfig;
-import com.greenfood.checkout_service.infrastructure.exceptions.templateExceptions.PaymentProcessingException;
 import com.mercadopago.client.preference.PreferenceClient;
 import com.mercadopago.client.preference.PreferenceItemRequest;
 import com.mercadopago.client.preference.PreferenceRequest;
@@ -32,7 +32,7 @@ public class GatewayMercadoPago implements GatewayMercadoPagoPortOut {
         this.accessToken = accessToken;
     }
 
-    public ResponseCheckoutDto execute(PaymentDto paymentDto) throws PaymentProcessingException {
+    public ResultT<ResponseCheckoutDto> execute(PaymentDto paymentDto) {
         PreferenceClient preferenceClient = new PreferenceClient();
 
 
@@ -50,23 +50,24 @@ public class GatewayMercadoPago implements GatewayMercadoPagoPortOut {
             Preference preference = preferenceClient.create(preferenceRequest, requestOptions);
             log.info("Preference: {}", preference.getInitPoint());
             if (preference.getInitPoint() == null) {
-                throw new PaymentProcessingException("Preference not created");
+                return ResultT.failWithError("Preference not created");
             }
             log.info("Preference created: {}", preference.getInitPoint());
             log.info("Response Mercado Pago API: " + GsonBuilderMPConfig.gson().toJson(preference));
 
-            return new ResponseCheckoutDto(preference.getInitPoint());
+            return ResultT.ok(new ResponseCheckoutDto(preference.getInitPoint()));
         } catch (MPApiException ex) {
-            log.error(
-                    "MercadoPago Error. Status: {}, Content: {}",
-                    ex.getApiResponse().getStatusCode(), ex.getApiResponse().getContent());
-            throw new PaymentProcessingException("MercadoPago Error. Status: " + ex.getApiResponse().getStatusCode() + ", Content: " + ex.getApiResponse().getContent(), ex);
+            String errorMsg = "MercadoPago Error. Status: " + ex.getApiResponse().getStatusCode() + ", Content: " + ex.getApiResponse().getContent();
+            log.error(errorMsg);
+            return ResultT.failWithError(errorMsg);
         } catch (MPException ex) {
-            log.error("MercadoPago Error: " + ex.getMessage());
-            throw new PaymentProcessingException("MercadoPago Error: " + ex.getMessage(), ex);
+            String errorMsg = "MercadoPago Error: " + ex.getMessage();
+            log.error(errorMsg);
+            return ResultT.failWithError(errorMsg);
         } catch (Exception ex) {
-            log.error("Error processing payment: " + ex.getMessage());
-            throw new PaymentProcessingException("Error processing payment: " + ex.getMessage(), ex);
+            String errorMsg = "Error processing payment: " + ex.getMessage();
+            log.error(errorMsg);
+            return ResultT.failWithError(errorMsg);
         }
     }
 

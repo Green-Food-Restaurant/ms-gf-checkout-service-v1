@@ -13,8 +13,23 @@ public class Payment {
     private PaymentMethod paymentMethod;
     private PaymentStatus paymentStatus;
     private LocalDateTime paymentDate;
-    private BigDecimal paymentAmount;
+    private Number prodcutQuantity;
+    private Number paymentAmount;
     private List<Product> products;
+
+    
+
+    public Number getProdcutQuantity() {
+        return prodcutQuantity;
+    }
+
+    public void setProdcutQuantity(Number prodcutQuantity) {
+        this.prodcutQuantity = prodcutQuantity;
+    }
+
+    public void setPaymentAmount(Number paymentAmount) {
+        this.paymentAmount = paymentAmount;
+    }
 
     public String getId() {
         return id;
@@ -56,7 +71,7 @@ public class Payment {
         this.paymentDate = paymentDate;
     }
 
-    public BigDecimal getPaymentAmount() {
+    public Number getPaymentAmount() {
         return paymentAmount;
     }
 

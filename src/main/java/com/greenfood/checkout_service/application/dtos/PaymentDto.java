@@ -11,7 +11,7 @@ public record PaymentDto(
     PaymentMethod paymentMethod,
     PaymentStatus paymentStatus,
     String paymentDate,
-    Number totalAmount,
+    Number paymentAmount,
     Number productQuantity,
     List<ProductDto> products
 ) {

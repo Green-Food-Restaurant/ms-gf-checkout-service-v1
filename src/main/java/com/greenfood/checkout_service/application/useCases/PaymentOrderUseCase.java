@@ -8,8 +8,8 @@ import com.greenfood.checkout_service.application.port.out.GatewayMercadoPagoPor
 import com.greenfood.checkout_service.application.port.out.PaymentRepositoryPortOut;
 import com.greenfood.checkout_service.domain.enums.PaymentStatus;
 import com.greenfood.checkout_service.domain.model.Payment;
+import com.greenfood.checkout_service.domain.result.ResultT;
 import com.greenfood.checkout_service.infrastructure.adapter.in.controller.dto.ResponseCheckoutDto;
-import com.greenfood.checkout_service.infrastructure.exceptions.templateExceptions.PaymentProcessingException;
 import com.greenfood.checkout_service.infrastructure.mapper.PaymentObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
@@ -28,9 +28,7 @@ public class PaymentOrderUseCase implements PaymentOrderPortIn {
     }       
 
     @Override
-    public ResponseCheckoutDto execute(PaymentDto paymentDto) {
-        ResponseCheckoutDto responseCheckoutDto = null;
-
+    public ResultT<ResponseCheckoutDto> execute(PaymentDto paymentDto) {
         log.info("Execute Payment order use case");
         Payment payment = paymentObjectMapper.paymentDtoToPayment(paymentDto);
         payment.setPaymentDate(LocalDateTime.now());
@@ -38,17 +36,23 @@ public class PaymentOrderUseCase implements PaymentOrderPortIn {
         log.info("Start payment process");
         
         try {
-            responseCheckoutDto = gatewayMercadoPagoPortOut.execute(paymentDto);
-        } finally {
-            if (responseCheckoutDto == null) {
+            ResultT<ResponseCheckoutDto> result = gatewayMercadoPagoPortOut.execute(paymentDto);
+            
+            if (result.isSuccess()) {
+                payment.setPaymentStatus(PaymentStatus.COMPLETED);
+            } else {
                 payment.setPaymentStatus(PaymentStatus.ERROR);
             }
+            
             paymentRepositoryPortOut.save(paymentObjectMapper.paymentToPaymentDto(payment));
             log.info("Payment order use case finished");
+            
+            return result;
+        } catch (Exception ex) {
+            payment.setPaymentStatus(PaymentStatus.ERROR);
+            paymentRepositoryPortOut.save(paymentObjectMapper.paymentToPaymentDto(payment));
+            log.error("Error in payment order use case: {}", ex.getMessage());
+            return ResultT.failWithError("Erro ao processar pagamento: " + ex.getMessage());
         }
-
-        return responseCheckoutDto;
     }
-
-
 }
