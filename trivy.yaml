@@ -1,0 +1,25 @@
+# Configuração do Trivy para análise local
+# Salve como .trivyignore na raiz do projeto para ignorar falsos positivos
+
+# Configuração para análise de vulnerabilidades
+severity = ["CRITICAL", "HIGH"]
+ignore-unfixed = true
+timeout = "10m"
+
+# Formatos de saída disponíveis
+# format = "table" # Formato padrão para console
+# format = "json" # Para integração com outras ferramentas
+# format = "sarif" # Para IDEs e ferramentas que suportam SARIF
+
+# Escanear sistema operacional e bibliotecas
+vuln-type = ["os", "library"]
+
+# Ignorar issues específicas (exemplo)
+# ignorefile = ".trivyignore"
+
+[vulnerability]
+# Configurações específicas para análise de vulnerabilidades
+
+[secret]
+# Configurações para detecção de secrets
+disable-secret = false

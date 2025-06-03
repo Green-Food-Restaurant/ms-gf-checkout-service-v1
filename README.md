@@ -12,6 +12,7 @@ Este microsserviço é responsável pelo processamento de pagamentos e checkout 
 - [Uso](#uso)
 - [API](#api)
 - [Padrões Implementados](#padrões-implementados)
+- [CI/CD e Deploy](#cicd-e-deploy)
 - [Desenvolvimento](#desenvolvimento)
 
 ## 🔍 Visão Geral
@@ -166,6 +167,33 @@ A utilização do padrão de portas e adaptadores permite:
 - Isolamento da lógica de negócio
 - Fácil substituição de componentes externos
 - Testabilidade aprimorada
+
+## 🚢 CI/CD e Deploy
+
+O projeto utiliza GitHub Actions para automação do processo de CI/CD e Coolify para deploy contínuo.
+
+### Pipeline de CI/CD
+
+[![Build, Push e Deploy](https://github.com/Green-Food-Restaurant/ms-gf-checkout-service-v1/actions/workflows/build.yml/badge.svg)](https://github.com/Green-Food-Restaurant/ms-gf-checkout-service-v1/actions/workflows/build.yml)
+
+O pipeline inclui as seguintes etapas:
+- Compilação e testes unitários
+- Análise de vulnerabilidades com Trivy
+- Construção e publicação de imagem Docker
+- Deploy automatizado no Coolify
+
+### Deploy com Coolify
+
+O serviço é hospedado utilizando a plataforma Coolify, que oferece:
+- Deploy automatizado a partir do GitHub Actions
+- Monitoramento de recursos e logs
+- Escalonamento automático
+- Gerenciamento de domínios e TLS
+
+Para mais informações:
+- [Pipeline de Build e Segurança](docs/pipeline-build-seguranca.md)
+- [Documentação do Coolify](docs/deploy-coolify.md)
+- [Guia de Configuração do Coolify](docs/configuracao-coolify.md)
 
 ## 👨‍💻 Desenvolvimento
 

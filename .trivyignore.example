@@ -1,0 +1,11 @@
+# Arquivo .trivyignore - Use para ignorar falsos positivos ou vulnerabilidades avaliadas
+# Formato: ID-da-vulnerabilidade [comentário opcional]
+
+# Exemplo - Vulnerabilidade não aplicável (dependência usada apenas em testes)
+# CVE-2020-15250 Vulnerabilidade no JUnit, usado apenas para testes
+
+# Exemplo - Vulnerabilidade mitigada por controles no código
+# CVE-2022-22965 Spring4Shell - mitigada por não usar parâmetros não confiáveis
+
+# Exemplo - Vulnerabilidade que será corrigida em breve
+# CVE-2023-12345 Planejada para correção na sprint 45 (issue #123)
