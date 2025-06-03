@@ -109,17 +109,22 @@ jobs:
     steps:
       - name: Trigger Coolify Deployment
         run: |
-          curl -X POST "${{ secrets.COOLIFY_WEBHOOK }}" \
+          curl -X POST "${{ secrets.COOLIFY_WEBHOOK }}/api/v1/deploy?uuid=c04ssg4kw8soo8s0g4g8ksc4&force=false" \
           -H "Content-Type: application/json" \
           -H "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}" \
           -d '{"ref": "${{ github.ref }}"}'
       
-      - name: Verify Deployment Status
+      - name: Wait and check deployment status
         run: |
-          echo "Verificando status do deploy no Coolify..."
-          echo "Deploy iniciado em $(date)"
-          echo "Para mais detalhes, acesse o painel do Coolify."
-      
+          sleep 30
+          status=$(curl -X GET "${{ secrets.COOLIFY_WEBHOOK }}/api/v1/deployments/${{ steps.deploy.outputs.deployment_id }}/status" \
+            -H "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}" | jq -r '.status')
+          
+          if [[ "$status" != "success" ]]; then
+            echo "Deployment failed with status: $status"
+            exit 1
+          fi
+
       - name: Notify Coolify Deployment
         uses: rtCamp/action-slack-notify@v2
         env:
