@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  mongo-db-client:
+    image: mongo
+    environment:
+      MONGO_INITDB_DATABASE: greenfood-checkout-service
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-db-client:/data/db
+    networks:
+      - green-food-network
+  ms-gf-checkout-service-v1:
+    image: dalexandrias/ms-gf-checkout-service-v1:latest
+    ports:
+      - "8090:8090"
+    environment:
+      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE}
+      - MONGODB_URI=${MONGODB_URI}
+      - MERCADOPAGO_ACCESS_TOKEN=${MERCADOPAGO_ACCESS_TOKEN}
+    restart: always
+    networks:
+      - green-food-network
+      - maildev-network
+
+networks:
+  green-food-network:
+    external: true
+  maildev-network:
+    external: true
+
+
+volumes:
+  mongo-db-client:
+    driver: local
