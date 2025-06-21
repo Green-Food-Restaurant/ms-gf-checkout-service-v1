@@ -62,7 +62,7 @@ jobs:
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.get_tag.outputs.TAGS || steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -85,8 +85,11 @@ jobs:
           MAIN_TAG=$(echo "$MAIN_IMAGE" | awk -F: '{print $NF}')
           if [ "$MAIN_TAG" = "main" ]; then
             MAIN_TAG="latest"
+            # Substitui a tag 'main' por 'latest' nas tags
+            TAGS=$(echo "$TAGS" | sed 's/:main/:latest/g')
           fi
           echo "IMAGE_TAG=$MAIN_TAG" >> $GITHUB_OUTPUT
+          echo "TAGS=$TAGS" >> $GITHUB_OUTPUT
 
   notify-build:
     needs: docker
