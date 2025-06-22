@@ -18,7 +18,6 @@ import com.greenfood.checkout_service.application.dtos.PaymentDto;
 import com.greenfood.checkout_service.application.dtos.ProductDto;
 import com.greenfood.checkout_service.application.port.out.GatewayMercadoPagoPortOut;
 import com.greenfood.checkout_service.application.port.out.PaymentRepositoryPortOut;
-import com.greenfood.checkout_service.domain.enums.PaymentMethod;
 import com.greenfood.checkout_service.domain.enums.PaymentStatus;
 import com.greenfood.checkout_service.domain.model.Payment;
 import com.greenfood.checkout_service.domain.result.ResultT;
@@ -45,15 +44,12 @@ public class PaymentOrderUseCaseTest {
     @BeforeEach
     void setUp() {
         paymentOrderUseCase = new PaymentOrderUseCase(paymentRepositoryPortOut, paymentObjectMapper, gatewayMercadoPagoPortOut);
-          List<ProductDto> products = new ArrayList<>();
+        List<ProductDto> products = new ArrayList<>();
         products.add(new ProductDto("1", "Produto 1", "Descrição do produto 1", new BigDecimal("10.00"), "categoria", 2));
-        
-        paymentDto = new PaymentDto("1", "cart123", PaymentMethod.CREDIT_CARD, PaymentStatus.PENDING, null, 20.00, 2, products);
-        
+        paymentDto = new PaymentDto("1", "cart123", PaymentStatus.PENDING, null, 20.00, 2, products);
         payment = new Payment();
         payment.setId("1");
         payment.setCartId("cart123");
-        payment.setPaymentMethod(PaymentMethod.CREDIT_CARD);
     }
     
     @Test

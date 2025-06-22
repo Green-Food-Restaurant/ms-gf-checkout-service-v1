@@ -2,8 +2,6 @@ package com.greenfood.checkout_service.infrastructure.adapter.in.controller.dto;
 
 import java.util.List;
 
-import com.greenfood.checkout_service.domain.enums.PaymentMethod;
-
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -19,9 +17,6 @@ public record CheckoutEventDto(
 
     @NotNull(message = "productQuantity não pode ser nulo") 
     Number productQuantity,
-
-    @NotNull(message = "paymentMethod não pode ser nulo")
-    PaymentMethod paymentMethod,
 
     @NotNull(message = "products não pode ser nulo")
     @NotEmpty(message = "products não pode estar vazio")

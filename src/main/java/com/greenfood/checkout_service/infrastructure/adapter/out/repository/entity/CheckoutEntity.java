@@ -3,7 +3,6 @@ package com.greenfood.checkout_service.infrastructure.adapter.out.repository.ent
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.greenfood.checkout_service.domain.enums.PaymentMethod;
 import com.greenfood.checkout_service.domain.enums.PaymentStatus;
 
 import lombok.AllArgsConstructor;
@@ -18,7 +17,6 @@ public class CheckoutEntity {
     @Id
     private String id;
     private String cartId;
-    private PaymentMethod paymentMethod;
     private PaymentStatus paymentStatus;
     private String paymentDate;
     private Number paymentAmount;

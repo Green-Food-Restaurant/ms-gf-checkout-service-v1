@@ -4,20 +4,16 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.math.BigDecimal;
 
-import com.greenfood.checkout_service.domain.enums.PaymentMethod;
 import com.greenfood.checkout_service.domain.enums.PaymentStatus;
 
 public class Payment {
     private String id;
     private String cartId;
-    private PaymentMethod paymentMethod;
     private PaymentStatus paymentStatus;
     private LocalDateTime paymentDate;
     private Number prodcutQuantity;
     private Number paymentAmount;
     private List<Product> products;
-
-    
 
     public Number getProdcutQuantity() {
         return prodcutQuantity;
@@ -45,14 +41,6 @@ public class Payment {
 
     public void setCartId(String cartId) {
         this.cartId = cartId;
-    }
-
-    public PaymentMethod getPaymentMethod() {
-        return paymentMethod;
-    }
-
-    public void setPaymentMethod(PaymentMethod paymentMethod) {
-        this.paymentMethod = paymentMethod;
     }
 
     public PaymentStatus getPaymentStatus() {
@@ -89,8 +77,7 @@ public class Payment {
 
     @Override
     public String toString() {
-        return "Payment [id=" + id + ", cartId=" + cartId + ", paymentMethod="
-                + paymentMethod + ", paymentStatus=" + paymentStatus + ", paymentDate=" + paymentDate
-                + ", paymentAmount=" + paymentAmount + ", products=" + products + "]";
+        return "Payment [id=" + id + ", cartId=" + cartId + ", paymentStatus=" + paymentStatus + ", paymentDate="
+                + paymentDate + ", paymentAmount=" + paymentAmount + ", products=" + products + "]";
     }
 }
