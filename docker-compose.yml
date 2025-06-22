@@ -15,10 +15,6 @@ services:
     image: dalexandrias/ms-gf-checkout-service-v1:latest
     ports:
       - "8090:8090"
-    environment:
-      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE}
-      - MONGODB_URI=${MONGODB_URI}
-      - MERCADOPAGO_ACCESS_TOKEN=${MERCADOPAGO_ACCESS_TOKEN}
     restart: always
     networks:
       - green-food-network
