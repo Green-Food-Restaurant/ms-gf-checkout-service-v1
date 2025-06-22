@@ -15,8 +15,6 @@ public record ProductEventDto(
     @NotEmpty(message = "name não pode estar vazio")
     String name, // Nome do produto
 
-    @NotNull(message = "description não pode ser nulo")
-    @NotEmpty(message = "description não pode estar vazio")
     String description, // Descrição do produto
 
     @NotNull(message = "price não pode ser nulo")
