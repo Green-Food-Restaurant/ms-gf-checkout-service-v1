@@ -14,7 +14,7 @@ spring:
           classes: com.greenfood.checkout_service.infrastructure.configuration.interceptor.KafkaConsumerInterceptor
   data:
     mongodb:
-        uri: ${MONGODB_URI:mongodb://localhost:27017/greenfood-checkout-service}
+        uri: ${MONGODB_URI:mongodb://mongo-db-client:27017/greenfood-checkout-service}
 server:
   port: 8090
 
