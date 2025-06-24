@@ -29,6 +29,24 @@ jobs:
           cache: 'maven'
       - name: Build with Maven
         run: mvn -B clean package -DskipTests
+      - name: Notify build success (Discord)
+        if: success()
+        run: |
+          curl -H "Content-Type: application/json" \
+            -X POST \
+            -d '{
+              "content": "✅ Build da aplicação (ms-gf-checkout-service-v1) finalizado com sucesso!"
+            }' \
+            "$DISCORD_WEBHOOK"
+      - name: Notify build failure (Discord)
+        if: failure()
+        run: |
+          curl -H "Content-Type: application/json" \
+            -X POST \
+            -d '{
+              "content": "❌ Falha no build da aplicação (ms-gf-checkout-service-v1). Verifique o pipeline."
+            }' \
+            "$DISCORD_WEBHOOK"
 
   docker:
     needs: build
