@@ -8,6 +8,15 @@ public class Product {
     private String description; // Descrição do produto
     private BigDecimal price; // Preço do produto
     private String category; // Categoria do produto
+    private Integer quantity; // Quantidade do produto
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
 
     public String getId() {
         return id;
@@ -39,7 +48,5 @@ public class Product {
     public void setCategory(String category) {
         this.category = category;
     }
-
-    //Gere os getters e setters
     
 }

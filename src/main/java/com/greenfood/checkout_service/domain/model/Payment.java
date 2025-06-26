@@ -11,16 +11,16 @@ public class Payment {
     private String cartId;
     private PaymentStatus paymentStatus;
     private LocalDateTime paymentDate;
-    private Number prodcutQuantity;
+    private Number productQuantity;
     private Number paymentAmount;
     private List<Product> products;
 
-    public Number getProdcutQuantity() {
-        return prodcutQuantity;
+    public Number getProductQuantity() {
+        return productQuantity;
     }
 
-    public void setProdcutQuantity(Number prodcutQuantity) {
-        this.prodcutQuantity = prodcutQuantity;
+    public void setProductQuantity(Number productQuantity) {
+        this.productQuantity = productQuantity;
     }
 
     public void setPaymentAmount(Number paymentAmount) {

@@ -5,5 +5,6 @@ import com.greenfood.checkout_service.application.dtos.PaymentDto;
 public interface PaymentRepositoryPortOut {
 
     void save(PaymentDto paymentDto);
+    PaymentDto findById(String paymentId);
 
 }

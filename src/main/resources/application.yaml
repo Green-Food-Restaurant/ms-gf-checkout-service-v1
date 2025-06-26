@@ -26,4 +26,5 @@ security:
 gateway:
   mercadopago:
     access-token: ${MERCADOPAGO_ACCESS_TOKEN:APP_USR-7543957714286812-020420-f15fc776d1a6a5e15205755eb8a707c0-2231192113}
+    notify-url: ${MERCADOPAGO_NOTIFY_URL:http://localhost:8090/v1/checkout/callback/notification}
     

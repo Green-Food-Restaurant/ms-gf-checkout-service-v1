@@ -26,4 +26,13 @@ public class PaymentRepositoryAdapterOut implements PaymentRepositoryPortOut {
         this.mongoClientRepository.save(paymentObjectMapper.paymentDtoToCheckoutEntity(paymentDto));
     }
 
+    @Override
+    public PaymentDto findById(String paymentId) {
+        log.info("Buscando pagamento com ID: {}", paymentId);
+        return paymentObjectMapper.checkoutEntityToPaymentDto(
+            this.mongoClientRepository.findByCartId(paymentId)
+                .orElseThrow(() -> new RuntimeException("Pagamento não encontrado com ID: " + paymentId))
+        );
+    }
+
 }

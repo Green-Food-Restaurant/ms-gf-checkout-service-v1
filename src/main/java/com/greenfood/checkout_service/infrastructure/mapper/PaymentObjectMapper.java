@@ -16,6 +16,7 @@ public interface PaymentObjectMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "paymentStatus", ignore = true)
     @Mapping(target = "paymentDate", ignore = true)
+    @Mapping(source = "totalAmount", target = "paymentAmount")
     PaymentDto checkoutEventToPaymentDto(CheckoutEventDto checkoutEvent);
 
     ProductDto productEventToProductDto(ProductEventDto productEvent);
@@ -24,9 +25,16 @@ public interface PaymentObjectMapper {
     // @Mapping(target = "products", ignore = true)
     CheckoutEntity paymentDtoToCheckoutEntity(PaymentDto paymentDto);
 
+    @Mapping(source = "productQuantity", target = "productQuantity")
     Payment paymentDtoToPayment(PaymentDto paymentDto);
 
+    @Mapping(source = "productQuantity", target = "productQuantity")
     PaymentDto paymentToPaymentDto(Payment payment);
 
+    @Mapping(source = "quantity", target = "quantity")
     ProductDto productDtoToProduct(Product productDto);
+
+    @Mapping(target = "productQuantity", ignore = true)
+    @Mapping(target = "products", ignore = true)
+    PaymentDto checkoutEntityToPaymentDto(CheckoutEntity checkoutEntity);
 }

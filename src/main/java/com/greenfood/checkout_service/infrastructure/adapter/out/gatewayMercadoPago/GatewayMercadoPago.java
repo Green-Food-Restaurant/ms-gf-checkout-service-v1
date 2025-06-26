@@ -28,8 +28,12 @@ public class GatewayMercadoPago implements GatewayMercadoPagoPortOut {
 
     private String accessToken;
 
-    public GatewayMercadoPago(@Value("${gateway.mercadopago.access-token}") String accessToken) {
+    private String notificationUrl;
+
+    public GatewayMercadoPago(@Value("${gateway.mercadopago.access-token}") String accessToken,
+                               @Value("${gateway.mercadopago.notify-url}") String notificationUrl) {
         this.accessToken = accessToken;
+        this.notificationUrl = notificationUrl;
     }
 
     public ResultT<ResponseCheckoutDto> execute(PaymentDto paymentDto) {
@@ -43,11 +47,12 @@ public class GatewayMercadoPago implements GatewayMercadoPagoPortOut {
                 .socketTimeout(2000)
                 .build();
 
-        PreferenceRequest preferenceRequest = createPreferenceRequest(createPreferenceItemRequests(paymentDto.products()));
+        PreferenceRequest preferenceRequest = createPreferenceRequest(createPreferenceItemRequests(paymentDto.products()), paymentDto.cartId());
 
         try {
             log.info("Init Mercado Pago API");
             Preference preference = preferenceClient.create(preferenceRequest, requestOptions);
+
             log.info("Preference: {}", preference.getInitPoint());
             if (preference.getInitPoint() == null) {
                 return ResultT.failWithError("Preference not created");
@@ -71,9 +76,11 @@ public class GatewayMercadoPago implements GatewayMercadoPagoPortOut {
         }
     }
 
-    private PreferenceRequest createPreferenceRequest(List<PreferenceItemRequest> preferenceItemRequests) {
+    private PreferenceRequest createPreferenceRequest(List<PreferenceItemRequest> preferenceItemRequests, String cartId) {
         return PreferenceRequest.builder()
                 .items(preferenceItemRequests)
+                .notificationUrl(notificationUrl)
+                .externalReference(cartId)
                 .build();
     }
 

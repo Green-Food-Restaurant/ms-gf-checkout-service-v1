@@ -12,7 +12,7 @@ import com.greenfood.checkout_service.infrastructure.mapper.PaymentObjectMapper;
 public class PaymentOrderConfigBean {
 
     @Bean
-    public PaymentOrderUseCase paymentOrderUseCase(PaymentRepositoryPortOut paymentRepositoryPortOut, PaymentObjectMapper paymentObjectMapper, GatewayMercadoPagoPortOut gatewayMercadoPagoPortOut) {
+    PaymentOrderUseCase paymentOrderUseCase(PaymentRepositoryPortOut paymentRepositoryPortOut, PaymentObjectMapper paymentObjectMapper, GatewayMercadoPagoPortOut gatewayMercadoPagoPortOut) {
         return new PaymentOrderUseCase(paymentRepositoryPortOut, paymentObjectMapper, gatewayMercadoPagoPortOut);
     }
 }
