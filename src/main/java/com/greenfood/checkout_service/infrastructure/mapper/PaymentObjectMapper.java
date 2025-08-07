@@ -21,20 +21,16 @@ public interface PaymentObjectMapper {
 
     ProductDto productEventToProductDto(ProductEventDto productEvent);
 
-    // @Mapping(target = "productQuantity", ignore = true)
-    // @Mapping(target = "products", ignore = true)
     CheckoutEntity paymentDtoToCheckoutEntity(PaymentDto paymentDto);
 
-    @Mapping(source = "productQuantity", target = "productQuantity")
     Payment paymentDtoToPayment(PaymentDto paymentDto);
 
-    @Mapping(source = "productQuantity", target = "productQuantity")
     PaymentDto paymentToPaymentDto(Payment payment);
 
-    @Mapping(source = "quantity", target = "quantity")
-    ProductDto productDtoToProduct(Product productDto);
+    ProductDto productDtoToProduct(Product product);
 
-    @Mapping(target = "productQuantity", ignore = true)
-    @Mapping(target = "products", ignore = true)
+    // CheckoutEntity não tem productQuantity e products, então definir valores padrão
+    @Mapping(target = "productQuantity", expression = "java(0)")
+    @Mapping(target = "products", expression = "java(java.util.Collections.emptyList())")
     PaymentDto checkoutEntityToPaymentDto(CheckoutEntity checkoutEntity);
 }
