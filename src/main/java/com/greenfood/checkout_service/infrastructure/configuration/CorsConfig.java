@@ -1,4 +1,4 @@
-package com.greenfood.checkout_service.infrastructure.configuration;
+package com.greenfood.checkout_service.infrastructure.configuration;            
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,9 +31,13 @@ public class CorsConfig {
         
         // Expõe headers específicos que podem ser acessados pela aplicação cliente
         config.addExposedHeader("Authorization");
+        config.addExposedHeader("Content-Type");
         
         // Habilita credenciais
         config.setAllowCredentials(true);
+        
+        // Cache preflight por 1 hora
+        config.setMaxAge(3600L);
         
         // Aplica esta configuração para todos os endpoints
         source.registerCorsConfiguration("/**", config);
