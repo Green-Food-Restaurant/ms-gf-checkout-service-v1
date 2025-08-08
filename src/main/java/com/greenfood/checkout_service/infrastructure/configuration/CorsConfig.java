@@ -15,8 +15,13 @@ public class CorsConfig {
         CorsConfiguration config = new CorsConfiguration();
         
         // Permite requisições de origens específicas
-        // Não podemos usar "*" com allowCredentials=true
-        config.addAllowedOriginPattern("*");
+        // Permite origens específicas para produção e desenvolvimento
+        config.addAllowedOrigin("https://greenfood.devarchitects.tech");
+        config.addAllowedOrigin("https://checkout.greenfood.devarchitects.tech");
+        config.addAllowedOrigin("http://localhost:3000");
+        config.addAllowedOrigin("http://localhost:3001");
+        config.addAllowedOrigin("http://localhost:5173");
+        config.addAllowedOrigin("http://127.0.0.1:3000");
         
         // Permite os métodos HTTP mais comuns
         config.addAllowedMethod("GET");
